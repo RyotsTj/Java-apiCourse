@@ -13,6 +13,7 @@ import com.amoibeojt.api.dto.ApiResponse;
 import com.amoibeojt.api.dto.PagedResponse;
 import com.amoibeojt.api.dto.PartsStockResponseDTO;
 import com.amoibeojt.api.dto.PartsStockSearchDTO;
+import com.amoibeojt.api.exception.InvalidInputException;
 import com.amoibeojt.api.service.PartsStockService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,15 @@ public class PartsStockController {
         @RequestParam(value="date_from",   required=false) Instant      dateFrom,
         @RequestParam(value="date_to",     required=false) Instant      dateTo
     ) {
+    	
+    	//入力範囲チェック
+    	if (amountMin != null && amountMax != null && amountMin > amountMax) {
+    		throw new InvalidInputException("amountMinGtMax");
+        }
+    	
+    	if (dateFrom != null && dateTo != null && dateFrom.isAfter(dateTo)) {
+    		throw new InvalidInputException("dateFromAfterDateTo");
+        }
     	
     	//リクエストパラメータをまとめた検索条件DTOを作成
         PartsStockSearchDTO criteria = new PartsStockSearchDTO(centerId,categoryId,stockId,namePattern,amountMin,amountMax,dateFrom,dateTo);
