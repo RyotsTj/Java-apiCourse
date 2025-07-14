@@ -1,4 +1,4 @@
-package com.amoibeojt.api.dto;
+package com.amoibeojt.api.dto.partsstock;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PartsStockDTO {
+public class PartsStockRequestDTO {
 	
 	// センターID
 	private Integer centerId;

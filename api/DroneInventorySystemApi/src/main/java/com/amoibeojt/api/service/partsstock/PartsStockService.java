@@ -1,9 +1,9 @@
-package com.amoibeojt.api.service;
+package com.amoibeojt.api.service.partsstock;
 
 import java.util.List;
 
-import com.amoibeojt.api.dto.PartsStockResponseDTO;
-import com.amoibeojt.api.dto.PartsStockSearchDTO;
+import com.amoibeojt.api.dto.partsstock.PartsStockResponseDTO;
+import com.amoibeojt.api.dto.partsstock.PartsStockSearchDTO;
 
 /**
  * 部品在庫照会のサービスのインターフェース

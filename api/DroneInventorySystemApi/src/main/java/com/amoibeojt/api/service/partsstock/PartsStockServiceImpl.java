@@ -1,4 +1,4 @@
-package com.amoibeojt.api.service;
+package com.amoibeojt.api.service.partsstock;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.amoibeojt.api.dto.PartsStockResponseDTO;
-import com.amoibeojt.api.dto.PartsStockSearchDTO;
+import com.amoibeojt.api.dto.partsstock.PartsStockResponseDTO;
+import com.amoibeojt.api.dto.partsstock.PartsStockSearchDTO;
 import com.amoibeojt.api.entity.PartsStock;
 import com.amoibeojt.api.repository.PartsStockRepository;
 

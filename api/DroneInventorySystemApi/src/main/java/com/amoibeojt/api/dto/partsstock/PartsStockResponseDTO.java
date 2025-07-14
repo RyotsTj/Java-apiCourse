@@ -1,4 +1,4 @@
-package com.amoibeojt.api.dto;
+package com.amoibeojt.api.dto.partsstock;
 
 import java.time.LocalDateTime;
 

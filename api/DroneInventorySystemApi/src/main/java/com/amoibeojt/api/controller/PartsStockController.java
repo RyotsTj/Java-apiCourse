@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amoibeojt.api.dto.ApiResponse;
 import com.amoibeojt.api.dto.PagedResponse;
-import com.amoibeojt.api.dto.PartsStockResponseDTO;
-import com.amoibeojt.api.dto.PartsStockSearchDTO;
+import com.amoibeojt.api.dto.partsstock.PartsStockResponseDTO;
+import com.amoibeojt.api.dto.partsstock.PartsStockSearchDTO;
 import com.amoibeojt.api.exception.InvalidInputException;
-import com.amoibeojt.api.service.PartsStockService;
+import com.amoibeojt.api.service.partsstock.PartsStockService;
 
 import lombok.RequiredArgsConstructor;
 
