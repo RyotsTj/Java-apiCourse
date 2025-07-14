@@ -20,7 +20,7 @@ public class PartsStockSearchDTO {
     //分類ID 複数可
     private List<Integer> categoryId;
     //在庫ID 単一
-    private List<Integer> stockIds;
+    private List<Integer> stockId;
     //部品名パターン
     private String namePattern;
     //在庫数の最小

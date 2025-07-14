@@ -66,9 +66,9 @@ public class PartsStockServiceImpl implements PartsStockService {
             root.get("categoryId").in(c.getCategoryId()));
     }
     // stock_id IN (…)
-    if (!CollectionUtils.isEmpty(c.getStockIds())) {
+    if (!CollectionUtils.isEmpty(c.getStockId())) {
         spec = spec.and((root, q, cb) ->
-            root.get("stockId").in(c.getStockIds()));
+            root.get("stockId").in(c.getStockId()));
     }
 
     // 部品名部分一致 (case‐insensitive)
