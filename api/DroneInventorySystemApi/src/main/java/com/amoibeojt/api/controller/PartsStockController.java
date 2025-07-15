@@ -1,6 +1,5 @@
 package com.amoibeojt.api.controller;
 
-import java.time.Instant;
 import java.util.List;
 
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -54,13 +53,11 @@ public class PartsStockController {
         @RequestParam(value="stock_id",     required=false) List<Integer> stockId,
         @RequestParam(value="name_pattern",required=false) String       namePattern,
         @RequestParam(value="amount_min",  required=false) Integer      amountMin,
-        @RequestParam(value="amount_max",  required=false) Integer      amountMax,
-        @RequestParam(value="date_from",   required=false) Instant      dateFrom,
-        @RequestParam(value="date_to",     required=false) Instant      dateTo
+        @RequestParam(value="amount_max",  required=false) Integer      amountMax
     ) {
         
     	// リクエストパラメータをまとめた検索条件DTOを作成
-    	PartsStockSearchDTO criteria = new PartsStockSearchDTO(centerId,categoryId,stockId,namePattern,amountMin,amountMax,dateFrom,dateTo);
+    	PartsStockSearchDTO criteria = new PartsStockSearchDTO(centerId,categoryId,stockId,namePattern,amountMin,amountMax);
 
         // バリデーションチェック
         Errors errors = new BeanPropertyBindingResult(criteria, "criteria");
