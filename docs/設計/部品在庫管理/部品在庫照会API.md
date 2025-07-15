@@ -44,14 +44,12 @@ Authorization: Bearer <JWT_TOKEN>
 
 | パラメータ名 | 型      | 必須 | 説明                         | 例                     |
 | ------------ | ------- | ---- | ---------------------------- | ---------------------- |
-| center_ids   | string  | 任意 | センター ID（カンマ区切り）  | "1,2"                  |
-| category_ids | string  | 任意 | カテゴリ ID（カンマ区切り）  | "1,3"                  |
-| stock_id     | string  | 任意 | 在庫 ID（カンマ区切り）      | "1"                    |
+| stock_id     | integer | 必須 | 在庫 ID（カンマ区切り）      |  1,2                   |
+| category_id  | integer | 任意 | カテゴリ ID（カンマ区切り）  |  1,3                   |
+| center_id    | integer | 任意 | センター ID（カンマ区切り）  |  1                     |
 | name_pattern | string  | 任意 | 部品名の部分一致検索         | "ドローン"             |
-| amount_min   | integer | 任意 | 在庫数量の最小値             | 10                     |
-| amount_max   | integer | 任意 | 在庫数量の最大値             | 100                    |
-| date_from    | string  | 任意 | 更新日時の開始日（ISO 8601） | "2024-12-01T00:00:00Z" |
-| date_to      | string  | 任意 | 更新日時の終了日（ISO 8601） | "2024-12-15T23:59:59Z" |
+| amount_min   | integer | 任意 | 在庫数量の最小値             |  10                    |
+| amount_max   | integer | 任意 | 在庫数量の最大値             |  100                   |
 
 
 ### 2.4 レスポンス

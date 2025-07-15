@@ -75,7 +75,7 @@ public class PartsStockController {
         // 取得件数が 0 件の場合は、ダミーメッセージを返却
         if (page.getTotal_count() == 0) {
             var dummy = PartsStockResponseDTO.builder()
-                .name("dataNotFound")
+                .name("一致するデータがありません。")
                 .build();
             page.setItems(List.of(dummy));
         }

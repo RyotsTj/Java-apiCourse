@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.amoibeojt.api.dto.partsstock.PartsStockResponseDTO;
 import com.amoibeojt.api.dto.partsstock.PartsStockSearchDTO;
 import com.amoibeojt.api.entity.PartsStock;
+import com.amoibeojt.api.repository.CenterInfoRepository;
+import com.amoibeojt.api.repository.PartsCategoryInfoRepository;
 import com.amoibeojt.api.repository.PartsStockRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class PartsStockServiceImpl implements PartsStockService {
 
     private final PartsStockRepository repository;
+    private final PartsCategoryInfoRepository categoryRepo;
+    private final CenterInfoRepository centerRepo;
 
     @Override
     public List<PartsStockResponseDTO> search(PartsStockSearchDTO c) {
@@ -33,12 +37,22 @@ public class PartsStockServiceImpl implements PartsStockService {
             .map(this::toDto)
             .collect(Collectors.toList());
     }
-
+    
     private PartsStockResponseDTO toDto(PartsStock e) {
+        // カテゴリ名を取得
+        String categoryName = categoryRepo.findById(e.getCategoryId())
+            .map(cat -> cat.getCategoryName())
+            .orElse(null);
+
+        // センター名を取得
+        String centerName = centerRepo.findById(e.getCenterId())
+            .map(c -> c.getCenterName())
+            .orElse(null);
+
         return PartsStockResponseDTO.builder()
-            .centerId(    e.getCenterId())
-            .categoryId(  e.getCategoryId())
-            .stockId(     e.getStockId())
+        	.stockId(     e.getStockId())
+        	.categoryName(categoryName)
+        	.centerName(  centerName)
             .name(        e.getName())
             .amount(      e.getAmount())
             .description( e.getDescription())
