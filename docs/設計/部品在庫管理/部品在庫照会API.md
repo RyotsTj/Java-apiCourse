@@ -30,7 +30,7 @@
 #### 2.2.1 リクエスト例
 
 ```http
-GET /api/parts/stock?center_ids=1,2&category_ids=1,3&name_pattern=ドローン&amount_min=10&amount_max=100
+GET /api/parts/stock?center_id=1,2&category_id=1,3&name_pattern=ドローン&amount_min=10&amount_max=100
 Authorization: Bearer <JWT_TOKEN>
 ```
 
@@ -44,15 +44,17 @@ Authorization: Bearer <JWT_TOKEN>
 
 | パラメータ名 | 型      | 必須 | 説明                         | 例                     |
 | ------------ | ------- | ---- | ---------------------------- | ---------------------- |
-| center_ids   | string  | 任意 | センター ID（カンマ区切り）  | "1,2"                  |
-| category_ids | string  | 任意 | カテゴリ ID（カンマ区切り）  | "1,3"                  |
-| stock_id     | string  | 任意 | 在庫 ID（カンマ区切り）      | "1"                    |
+| stock_id     | integer | 必須 | 在庫 ID（カンマ区切り）      |  1,2                   |
+| category_id  | integer | 任意 | カテゴリ ID（カンマ区切り）  |  1,3                   |
+| center_id    | integer | 任意 | センター ID（カンマ区切り）  |  1                     |
 | name_pattern | string  | 任意 | 部品名の部分一致検索         | "ドローン"             |
-| amount_min   | integer | 任意 | 在庫数量の最小値             | 10                     |
-| amount_max   | integer | 任意 | 在庫数量の最大値             | 100                    |
-| date_from    | string  | 任意 | 更新日時の開始日（ISO 8601） | "2024-12-01T00:00:00Z" |
-| date_to      | string  | 任意 | 更新日時の終了日（ISO 8601） | "2024-12-15T23:59:59Z" |
+| amount_min   | integer | 任意 | 在庫数量の最小値             |  10                    |
+| amount_max   | integer | 任意 | 在庫数量の最大値             |  100                   |
 
+#### 2.2.4 パラメータ検証ルール
+- stock_id, category_id, center_id：整数のカンマ区切り。空要素・非数値混在は 400
+- amount_min, amount_max：整数。amount_min > amount_max は 400
+- date_from, date_to：ISO‑8601。date_from > date_to は 400
 
 ### 2.4 レスポンス
 
@@ -65,38 +67,52 @@ Authorization: Bearer <JWT_TOKEN>
   "data": {
     "items": [
       {
-        "stock_id": 1,
+        "stockId": 1,
+        "categoryName": "フレーム",
+        "centerName": "メインセンター",
         "name": "ドローンフレーム（カーボン製）",
-        "category_name": "フレーム",
-        "center_name": "メインセンター",
         "amount": 75,
         "description": "カーボン製のドローンフレーム",
-        "create_date": "2024-12-15T10:30:15Z",
-        "update_date": "2024-12-15T14:20:30Z"
+        "createDate": "2024-12-15T10:30:15",
+        "updateDate": "2024-12-15T14:20:30"
       },
       {
-        "stock_id": 2,
+        "stockId": 2,
+        "categoryName": "プロペラ",
+        "centerName": "メインセンター",
         "name": "ドローンプロペラ（高効率）",
-        "category_name": "プロペラ",
-        "center_name": "メインセンター",
         "amount": 120,
         "description": "高効率ドローン用プロペラ",
-        "create_date": "2024-12-14T09:15:30Z",
-        "update_date": "2024-12-15T11:45:20Z"
+        "createDate": "2024-12-14T09:15:30",
+        "updateDate": "2024-12-15T11:45:20"
       },
       {
-        "stock_id": 5,
+        "stockId": 5,
+        "categoryName": "バッテリー",
+        "centerName": "西部センター",
         "name": "ドローンバッテリー（リチウム）",
-        "category_name": "バッテリー",
-        "center_name": "西部センター",
         "amount": 45,
         "description": "長時間駆動リチウムバッテリー",
-        "create_date": "2024-12-13T14:22:10Z",
-        "update_date": "2024-12-15T16:30:45Z"
+        "createDate": "2024-12-13T14:22:10",
+        "updateDate": "2024-12-15T16:30:45"
       }
     ],
     "total_count": 3
   }
+}
+```
+```json
+{
+    "status": "success",
+    "message": "部品在庫情報を正常に取得しました",
+    "data": {
+        "items": [
+            {
+                "name": "一致するデータがありません。"
+            }
+        ],
+        "total_count": 0
+    }
 }
 ```
 
@@ -108,7 +124,51 @@ Authorization: Bearer <JWT_TOKEN>
 | 401        | UNAUTHORIZED    | 認証エラー         |
 | 500        | INTERNAL_ERROR  | システム内部エラー |
 
----
+#### 2.4.3 エラー例
+```json
+HTTP/1.1 400 Bad Request
+{
+  "status": "error",
+  "message": "入力が無効です",
+  "error_code": "INVALID_REQUEST",
+  "details": "amount_min は amount_max 以下で指定してください",
+  "timestamp": "2025-07-16T22:32:56.913540900+09:00[Asia/Tokyo]"
+}
+```
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+  "message": "Authorization header is missing or incorrect",
+  "status": "401",
+  "token": null
+}
+
+```
+```json
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json
+
+{
+  "status": "error",
+  "message": "予期しないエラーが発生しました",
+  "error_code": "INTERNAL_ERROR",
+  "details": "NullPointerException at PartsStockServiceImpl#search",
+  "timestamp": "2025-07-16T22:31:56.715195200+09:00[Asia/Tokyo]"
+}
+```
+
+| ステータス | エラーコード    | エラーメッセージ   | 説明                                              |
+| ---------- | --------------- | ------------------ | ------------------------------------------------  |
+| 400        | INVALID_REQUEST | 入力が無効です     | center_id のリストに空または非数値があります      |
+| 400        | INVALID_REQUEST | 入力が無効です     | amount_min は amount_max 以下で指定してください   |
+| 400        | INVALID_REQUEST | 入力が無効です     | stock_id のリストに空または非数値があります       |
+| 400        | INVALID_REQUEST | 入力が無効です     | category_id のリストに空または非数値があります    |
+| 400        | INVALID_REQUEST | 入力が無効です     | center_id のリストに空または非数値があります      |
+| 400        | INVALID_REQUEST | 入力が無効です     | stock_idは必須項目です。                          |
+| 400        | INVALID_REQUEST | 入力が無効です     | 不明なエラー                                      |
+| 400        | INVALID_REQUEST | 入力が無効です     | center_id のリストに空または非数値があります      |
 
 ## 3. 詳細設計（内部仕様）
 
@@ -124,14 +184,43 @@ sequenceDiagram
     Client->>API: GET /api/parts/stock
     API->>Auth: JWT認証検証
     Auth-->>API: 認証結果
-    API->>API: パラメータバリデーション
-    API->>DB: 部品在庫情報検索（クエリパラメータに一致するもの）
-    DB-->>API: 部品在庫データ（削除フラグ＝0）
+    API->>API: パラメータバリデーション → 例外発生
+    API->>GlobalHandler: グローバル例外ハンドラー
+    GlobalHandler-->>API: JSON エラー応答
+    API->>DB: 部品在庫情報検索（削除フラグ＝0＋フィルタ）
+    DB-->>API: データ取得
     API->>API: レスポンス整形
     API-->>Client: 在庫情報返却
 ```
 
+### 3.2 バリデーション処理フロー
+- SequenceDiagram に「パラメータバリデーション → 例外ハンドリング → グローバル例外ハンドラーで JSON 化」までを明示しておくと、全体像が見えやすくなります。
 
+### 3.3 検索条件 Specification の組み立てロジック
+```json
+// delete_flag = false
+spec = where(ps.deleteFlag == false);
+// center_id IN (...)
+if (centerId != null) spec = spec.and(ps.centerId in centerId);
+// name_pattern LIKE ...
+if (namePattern != null) spec = spec.and(lower(ps.name) like %namePattern%);
+// …以下略…
+```
+
+### 3.4 検索条件 Specification の組み立てロジック
+```json
+SELECT
+  ps.stock_id,
+  pci.category_name,
+  ci.center_name,
+  ps.name,
+  …
+FROM parts_stock ps
+LEFT JOIN parts_category_info pci ON ps.category_id = pci.category_id
+LEFT JOIN center_info ci           ON ps.center_id   = ci.center_id
+WHERE ps.delete_flag = 0
+  AND …（フィルタ条件）…
+```
 
 ### 3.5 関連ドキュメント
 

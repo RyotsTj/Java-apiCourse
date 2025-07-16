@@ -1,6 +1,5 @@
 package com.amoibeojt.api.dto.partsstock;
 
-import java.time.Instant;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -20,16 +19,12 @@ public class PartsStockSearchDTO {
     //分類ID 複数可
     private List<Integer> categoryId;
     //在庫ID 単一
-    private List<Integer> stockIds;
+    private List<Integer> stockId;
     //部品名パターン
     private String namePattern;
     //在庫数の最小
     private Integer amountMin;
     //在庫数の最大
     private Integer amountMax;
-    //更新日時の開始 (yyyy-MM-dd)
-    private Instant dateFrom;
-    //更新日時の終了 (yyyy-MM-dd)
-    private Instant dateTo;
     
 }

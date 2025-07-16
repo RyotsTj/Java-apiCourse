@@ -27,9 +27,5 @@ public class PartsStockRequestDTO {
 	private Integer amountMin;
 	//在庫数量の最大値
 	private Integer amountMax;
-	//更新日時の開始日
-	private String dateFrom;
-	//更新日時の終了日
-	private String dateTo;
 
 }

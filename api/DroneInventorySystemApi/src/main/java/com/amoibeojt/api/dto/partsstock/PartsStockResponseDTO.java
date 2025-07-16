@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PartsStockResponseDTO {
-    //センターID
-    private Integer centerId;
-    //分類ID
-    private Integer categoryId;
-    //在庫ID
+    //stock_id
     private Integer stockId;
+    //カテゴリ名
+    private String categoryName;
+    //センター名
+    private String centerName;
     //部品名
     private String name;
     //在庫数
