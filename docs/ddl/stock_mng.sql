@@ -16,7 +16,7 @@ CREATE TABLE `admin_info` (
   PRIMARY KEY (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理者情報テーブル';
 
-INSERT INTO `admin_info` VALUES ('dotlife','運営事務局','sample.com','090××××××××','$2a$10$lC4aebTI9REPrc0c5mxJU.uGd1GvzG.wPcHTN5oxTEB3jt23P.0fW',0,'2024-01-23 00:00:00','2024-01-23 00:00:00'),('tokyo_operater','[東京]オペレータ','sample.com','090××××××××','$2a$10$lC4aebTI9REPrc0c5mxJU.uGd1GvzG.wPcHTN5oxTEB3jt23P.0fW',0,'2024-01-23 00:00:00','2024-01-23 00:00:00');
+INSERT INTO `admin_info` VALUES ('amoibeojt','運営事務局','sample.com','090××××××××','$2a$10$lC4aebTI9REPrc0c5mxJU.uGd1GvzG.wPcHTN5oxTEB3jt23P.0fW',0,'2024-01-23 00:00:00','2024-01-23 00:00:00'),('tokyo_operater','[東京]オペレータ','sample.com','090××××××××','$2a$10$lC4aebTI9REPrc0c5mxJU.uGd1GvzG.wPcHTN5oxTEB3jt23P.0fW',0,'2024-01-23 00:00:00','2024-01-23 00:00:00');
 
 --
 -- Table structure for table `center_info`
