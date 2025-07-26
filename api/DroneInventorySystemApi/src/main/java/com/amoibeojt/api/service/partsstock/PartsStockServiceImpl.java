@@ -56,8 +56,6 @@ public class PartsStockServiceImpl implements PartsStockService {
             .name(        e.getName())
             .amount(      e.getAmount())
             .description( e.getDescription())
-            .createDate(  e.getCreateDate())
-            .updateDate(  e.getUpdateDate())
             .build();
     }
 }

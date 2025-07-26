@@ -1,7 +1,5 @@
 package com.amoibeojt.api.dto.partsstock;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
@@ -30,9 +28,5 @@ public class PartsStockResponseDTO {
     private Integer amount;
     //説明
     private String description;
-    //登録日時
-    private LocalDateTime createDate;
-    //更新日時
-    private LocalDateTime updateDate;
 
 }

@@ -2,6 +2,7 @@ package com.amoibeojt.api.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -51,7 +52,9 @@ public interface PartsStockRepository extends JpaRepository<PartsStock, Integer>
                 cb.le(root.get("amount"), c.getAmountMax()));
         }
 
-        return findAll(spec);
+        Sort sort = Sort.by(Sort.Direction.ASC, "stockId");
+        
+        return findAll(spec, sort);
     }
 
 }
